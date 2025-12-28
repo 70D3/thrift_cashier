@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Midtrans\Snap;
+use Midtrans\Config;
 
 class HomeController extends Controller
 {
@@ -58,7 +60,7 @@ class HomeController extends Controller
             'status' => 'required|string'
         ]);
 
-        $allowed = ['Completed', 'Cancelled', 'Waiting', 'Cart'];
+        $allowed = ['paid', 'Cancelled', 'Waiting', 'Cart'];
         $status = $request->input('status');
 
         if (!in_array($status, $allowed)) {
@@ -70,8 +72,57 @@ class HomeController extends Controller
             return redirect()->back()->with('error', 'Transaksi tidak ditemukan');
         }
 
-        $transaction->update(['status' => $status]);
+        $transaction->update([
+            'status' => $status,
+            'payment_status' => $status,
+        ]);
 
         return redirect()->route('cashier.order-list')->with('success', 'Status diubah');
     }
+
+
+
+    public function snapshot($transaction_id)
+    {
+        Config::$serverKey = config('midtrans.server_key');
+        Config::$isProduction = false;
+        Config::$isSanitized = true;
+        Config::$is3ds = true;
+
+        $transaction = Transaction::with('details.produk')->findOrFail($transaction_id);
+
+        $params = [
+            'transaction_details' => [
+                'order_id' => 'ORDER-' . $transaction->id . '-' . time(),
+                'gross_amount' => $transaction->total,
+            ],
+            'customer_details' => [
+                'first_name' => $transaction->customer_name,
+            ]
+        ];
+
+        $snapToken = Snap::getSnapToken($params);
+
+        return response()->json([
+            'snap_token' => $snapToken
+        ]);
+    }
+
+    public function callback(Request $request)
+    {
+        $status = $request->transaction_status;
+        $orderId = $request->order_id;
+
+        $transactionId = explode('-', $orderId)[1];
+
+        $transaction = Transaction::find($transactionId);
+
+        if ($status === 'settlement') {
+            $transaction->update(['status' => 'paid']);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+
 }

@@ -15,7 +15,8 @@ class Transaction extends Model
         'total',
         'pay',
         'return',
-        'status'
+        'status',
+        'payment_method',
     ];
     public function cashier()
     {
