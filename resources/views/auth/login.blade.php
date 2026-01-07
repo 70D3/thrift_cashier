@@ -16,7 +16,7 @@
                     <div class="card-body p-5">
                         <a href="." class="logo mb-4">
                             <img src="assets/images/logo.png" alt="Logo">
-                            <span>NewsOnlen</span>
+                            <span>Curious Outdoor</span>
                         </a>
 
                         <h5 class="text-dark fw-bold mb-4">Sign In</h5>

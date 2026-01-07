@@ -12,7 +12,7 @@
     <nav class="navbar navbar-expand-lg bg-white py-3">
         <div class="container-fluid">
             <a href="." class="navbar-brand logo">
-                <img src="assets/images/logo.png" alt=""> KasirOnlen
+                <img src=" " alt=""> Curious Outdoor
             </a>
             <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarMenu">
@@ -40,7 +40,8 @@
                                 <hr class="dropdown-divider">
                             </li> --}}
                             <li>
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
@@ -62,17 +63,17 @@
 
     <footer class="pt-5 pb-4">
         <div class="container">
-            <p class="mb-0 text-center text-secondary fs-7">
+            {{-- <p class="mb-0 text-center text-secondary fs-7">
                 Copyright &copy; PT Onlenkan Teknologi Indonesia 2024. Seluruh hak cipta dilindungi.
-            </p>
+            </p> --}}
         </div>
     </footer>
 
     @include('components.script')
     <script>
-    document.getElementById('checkoutModal').addEventListener('shown.bs.modal', function() {
-        document.getElementById('name').focus();
-    });
+        document.getElementById('checkoutModal').addEventListener('shown.bs.modal', function() {
+            document.getElementById('name').focus();
+        });
     </script>
 </body>
 

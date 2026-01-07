@@ -11,7 +11,7 @@
     <nav class="navbar navbar-expand-lg bg-white py-3">
         <div class="container-fluid">
             <a href="." class="navbar-brand logo">
-                <img src="assets/images/logo.png" alt=""> Toko Thrift
+                <img src=" " alt=""> Curious Outdoor
             </a>
             <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarMenu">
